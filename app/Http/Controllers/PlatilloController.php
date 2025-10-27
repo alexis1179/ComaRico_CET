@@ -9,10 +9,6 @@ class PlatilloController extends Controller
 {
     public function index()
     {
-        if (!session()->has('cliente_id')) {
-            return redirect('/login')->with('error', 'Debes iniciar sesión para ver el menú.');
-        }
-
         $platillos = Platillo::where('disponible', true)->get();
         $categorias = Platillo::where('disponible', true)->pluck('categoria')->unique();
         $maxPrecio = Platillo::where('disponible', true)->max('precio');

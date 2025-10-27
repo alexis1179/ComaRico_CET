@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Perfil de usuario</title>
-    @Vite('resources/css/app.css')
-
+    @vite('resources/css/app.css')
 </head>
 <body class="h-screen">
     <x-top_bar/>
-    <div class="bg-gray-200 p-4 h-full flex justify-center">
+    <div class="bg-color-bg text-white p-4 h-full flex justify-center">
         {{-- Historial de órdenes --}}
-        <div class="rounded-lg shadow-lg bg-white p-6 mr-5 max-w-4xl flex-1 h-fit flex flex-col items-center">
+        <div class="rounded-lg shadow-lg bg-color-secondary p-6 mr-5 max-w-4xl flex-1 h-fit flex flex-col items-center">
             <h1 class="text-2xl font-bold text-center uppercase">Historial de Órdenes</h1>
-            <table class="w-full border-collapse border border-gray-400 my-4">
+            <table class="w-full border-collapse my-4">
                 <thead>
-                    <tr class="bg-gray-100">
+                    <tr class="bg-slate-700">
                         <th class="px-4 py-4"># Orden</th>
                         <th class="px-4 py-4">Fecha</th>
                         <th class="px-4 py-4">Total</th>
@@ -27,8 +26,8 @@
                 <tbody>
                     @php $count = 1 @endphp
                     @forelse($ordenes as $order)
-                        <tr class="text-center border border-gray-300 hover:bg-orange-100
-                        @if ($count % 2 == 0) bg-gray-100 @endif">
+                        <tr class="text-center hover:bg-slate-700
+                        @if ($count % 2 == 0) bg-color-bg @endif">
                             <td class="px-4 py-4">{{ $order->id }}</td>
                             <td class="px-4 py-4">{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             <td class="px-4 py-4">${{ number_format($order->total, 2) }}</td>
@@ -50,11 +49,11 @@
                     @endforelse
                 </tbody>
             </table>
-            <a href="/menu" class="p-4 text-white rounded-lg bg-orange-500 hover:bg-orange-700 font-bold">Regresar a Inicio</a>
+            <a href="/menu" class="p-4 text-white rounded-lg bg-color-main hover:bg-orange-500 font-bold">Regresar a Inicio</a>
         </div>
 
         {{-- Detalles del usuario --}}
-        <div class="border border-gray-200 shadow-lg bg-white rounded-lg mr-5 p-4 w-fit max-h-fit">
+        <div class="shadow-lg bg-color-secondary rounded-lg mr-5 p-4 w-fit max-h-fit">
             <div class="">
                 <div class="font-bold uppercase mb-2 text-center">
                     <h5>Detalles del Usuario</h5>
