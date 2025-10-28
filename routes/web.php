@@ -5,6 +5,7 @@ use App\Http\Controllers\PlatilloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrdenController;
 use App\Http\Controllers\CocineroController;
+use App\Http\Controllers\PagosController;
 
 /*
 |--------------------------------------------------------------------------

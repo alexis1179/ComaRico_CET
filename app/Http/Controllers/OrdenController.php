@@ -62,7 +62,7 @@ class OrdenController extends Controller
 
             return $orden;
         });
-
+        $_SESSION['orden_id'] = $orden->id;
         return view('resumen', ['orden' => $orden->load('platillos')]);
     }
 

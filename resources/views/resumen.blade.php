@@ -26,24 +26,68 @@
                 <div class="text-end text-3xl font-bold max-md:text-2xl max-md:text-center">Total: <span class="text-orange-500">${{ number_format($orden->total,2) }}</span> </div>
             </div>
 
-            <form method="POST" action="{{ route('orden.guardarNota', $orden->id) }}" class="flex-shrink flex flex-col items-center bg-color-secondary p-6 rounded-lg shadow-lg max-w-xl max-md:max-w-full w-full">
+            <form id="formOrden" method="POST" action="{{ route('orden.guardarNota', $orden->id) }}" class="flex-shrink flex flex-col items-center bg-color-secondary p-6 rounded-lg shadow-lg max-w-xl max-md:max-w-full w-full">
                 @csrf
-                <label class="text-2xl font-bold text-center mb-4 max-md:text-xl">Detalles de tu orden</label>
-                <label class="text-lg w-full text-left">Notas para la cocina:</label>
-                <textarea name="nota" rows="4" cols="50" placeholder="Ej: Sin cebolla, con sal extra..."
+                <label class="text-2xl font-bold text-center mb-4 max-md:text-xl">Información de pago</label>
+                <label hidden="true" class="text-lg w-full text-left">Notas para la cocina:</label>
+                <textarea hidden="true" name="nota" rows="4" cols="50" placeholder="Ej: Sin cebolla, con sal extra..."
                 class="p-2 mb-4 w-full outline-none border border-gray-600 rounded-md bg-color-bg focus:border-orange-500 "></textarea>
 
-                <label class="text-lg w-full text-left">Nombre de contacto:</label>
-                <input type="text" name="contacto_nombre" placeholder="Ej: Juan Pérez"
+                <label class="text-lg w-full text-left">Nombre:</label>
+                <input id="nombre" type="text" name="contacto_nombre" placeholder="Ej: Juan" required="true"
+                class="p-2 mb-4 w-full outline-none border border-gray-600 rounded-md bg-color-bg focus:border-orange-500">
+
+                <label  class="text-lg w-full text-left">Apellido:</label>
+                <input id="apellido" type="text" name="contacto_apellido" placeholder="Ej:Pérez" required="true"
+                class="p-2 mb-4 w-full outline-none border border-gray-600 rounded-md bg-color-bg focus:border-orange-500">
+
+                <label  class="text-lg w-full text-left">Correo electrónico:</label>
+                <input id="correo" type="email" name="contacto_correo" placeholder="Ej: juan@email.com" required="true"
                 class="p-2 mb-4 w-full outline-none border border-gray-600 rounded-md bg-color-bg focus:border-orange-500">
 
                 <label class="text-lg w-full text-left">Teléfono:</label>
                 <input type="tel" maxlength="8" name="contacto_telefono" placeholder="Ej: 7777-8888"
                 class="p-2 mb-4 w-full outline-none border border-gray-600 rounded-md bg-color-bg focus:border-orange-500">
+                <div id="form-paypal"></div>
 
-                <button type="submit" class="p-4 my-4 text-white rounded-lg bg-color-main hover:bg-orange-400 text-lg font-bold">Finalizar orden</button>
+                </div>
+                <!--<button type="submit" class="p-4 my-4 text-white rounded-lg bg-color-main hover:bg-orange-400 text-lg font-bold">Finalizar orden</button>-->
+                <script src="https://www.paypal.com/sdk/js?client-id=AfXUFGQHLNa7jfFKn-OhyGDOBdeAkWko0Cl0W_hEZCkEC45Zjy4NFWdTjIZf1ZlSsM-8tiBV_8vETXTB&currency=USD"></script>
             </form>
         </div>
     </div>
+    <script>
+        form = document.getElementById('formOrden');
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    application_context: {
+                        shipping_preference: "NO_SHIPPING"
+                    },
+                    payer: {
+                        email_address: document.getElementById('correo').value,
+                        name: {
+                            given_name: document.getElementById('nombre').value,
+                            surname: document.getElementById('apellido').value
+                        },
+                        address: {
+                            country_code: "SV"
+                        }
+                    },
+                    purchase_units: [{
+                        amount: {
+                            value: {{ number_format($orden->total,2) }}
+                        }
+                    }],
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Enviar el formulario al servidor para procesar el pago
+                    form.submit();
+                });
+            }
+        }).render('#form-paypal'); 
+    </script>
 </body>
 </html>
