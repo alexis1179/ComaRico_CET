@@ -24,6 +24,8 @@ Route::get('/menu', [PlatilloController::class, 'index']);
 Route::get('/menu/filtrar', [PlatilloController::class, 'filtrarPorCategoriaPrecio'])->name('menu.filtrar');
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
+Route::get('/carrito', [OrdenController::class, 'verCarrito'])->name('cliente.carrito');
+Route::get('/carrito/eliminar', [OrdenController::class, 'cancelarOrden'])->name('cliente.cancelarOrden');
 
 Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\UsuarioNegocio;
 use App\Notifications\NuevaOrden;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -27,11 +28,10 @@ class OrdenController extends Controller
         if (!session()->has('cliente_id')) {
             return redirect('/login');
         }
-
+        
         $datos = $request->input('platillos');
         $total = 0;
         $items = [];
-
         foreach ($datos as $id => $cantidad) {
             if ($cantidad > 0) {
                 $platillo = Platillo::find($id);
@@ -51,30 +51,38 @@ class OrdenController extends Controller
 
        
         $orden = DB::transaction(function () use ($items, $total) {
-            $orden = Orden::create([
-                'cliente_id' => session('cliente_id'),
-                'total' => $total,
-            ]);
+            $orden = null;
+            if(session()->exists('orden_id')){
+                $orden = Orden::find(session()->get('orden_id'));
+                $orden->total += $total;
+                $orden->save();
+            }
+            else{
+                $orden = Orden::create([
+                    'cliente_id' => session('cliente_id'),
+                    'total' => $total,
+                ]);
+            }
 
             foreach ($items as $item) {
                 $orden->platillos()->attach($item['platillo_id'], ['cantidad' => $item['cantidad']]);
             }
-
+            
             return $orden;
         });
-        $_SESSION['orden_id'] = $orden->id;
+        session(['orden_id' => $orden->id]);
         return view('resumen', ['orden' => $orden->load('platillos')]);
     }
 
     public function guardarNota(Request $request, $id)
     {
         $orden = Orden::findOrFail($id);
-    $orden->nota = $request->input('nota');
-     $orden->contacto_nombre = $request->input('contacto_nombre');
-    $orden->contacto_telefono = $request->input('contacto_telefono');
-    $orden->save();
+        $orden->nota = $request->input('nota');
+        $orden->contacto_nombre = $request->input('contacto_nombre');
+        $orden->contacto_telefono = $request->input('contacto_telefono');
+        $orden->save();
 
-    return view('orden_completa', ['orden' => $orden]);
+        return view('orden_completa', ['orden' => $orden]);
     }
 
    public function historialCliente()
@@ -111,8 +119,27 @@ class OrdenController extends Controller
           return view('negocio.historial_ordenes', compact('ordenes'));
      }
 
-    
+    public function verCarrito()
+    {
+        $orden = null;
+        if (session()->exists('orden_id')){
+            $orden = Orden::with('platillos')->find(session()->get('orden_id'));
+            return view('resumen', ['orden' => $orden->load('platillos')]);
+        }
+        return redirect('/menu')->with('error', 'Tu carrito está vacío.');
+    }
 
+    public function cancelarOrden(Request $request)
+    {
+        $orden = Orden::findOrFail(session()->get('orden_id'));
+        $orden->platillos()->detach();
+        $orden->delete();
+
+        // Eliminar la orden de la sesión si es la misma
+        session()->forget('orden_id');
+
+        return redirect('/menu')->with('success', 'La orden ha sido cancelada exitosamente.');
+    }
 
 }
 
