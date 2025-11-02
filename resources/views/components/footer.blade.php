@@ -4,7 +4,7 @@
     <div>
       <h2 class="text-lg font-bold mb-4">SOBRE NOSOTROS</h2>
       <ul class="space-y-2">
-        <li><a href="#" class="hover:text-white">Reseña histórica</a></li>
+        <li><a href="{{ route('creadores') }}" class="hover:text-white">Creadores</a></li>
         <li><a href="#" class="hover:text-white">Misión y Visión</a></li>
       </ul>
     </div>
@@ -22,6 +22,7 @@
     <div>
       <h2 class="text-lg font-bold mb-4">MEDIOS DE CONTACTO</h2>
       <ul class="space-y-2">
+        <li><a href="#" class="hover:text-white">!Resuelve tus dudas!</a></li>
         <li><a href="#" class="hover:text-white">Whatsapp</a></li>
         <li><a href="#" class="hover:text-white">Facebook</a></li>
         <li><a href="#" class="hover:text-white">Instagram</a></li>

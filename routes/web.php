@@ -15,18 +15,21 @@ use App\Http\Controllers\PagosController;
 Route::get('/', function () {
     return redirect('/menu');
 });
+Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 Route::post('/registrar', [AuthController::class, 'registrarCliente'])->name('registrar.cliente');
 Route::get('/registrar', function () {
     return view('registrar_cliente');
 })->name('registrar.formulario');
+Route::get('/creadores', function () {
+    return view('creadores');
+})->name('creadores');
+
 
 Route::get('/menu', [PlatilloController::class, 'index']);
 Route::get('/menu/filtrar', [PlatilloController::class, 'filtrarPorCategoriaPrecio'])->name('menu.filtrar');
-Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 Route::get('/carrito', [OrdenController::class, 'verCarrito'])->name('cliente.carrito');
 Route::get('/carrito/eliminar', [OrdenController::class, 'cancelarOrden'])->name('cliente.cancelarOrden');
-
 Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');
 Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
@@ -36,8 +39,6 @@ Route::get('/perfil', [AuthController::class, 'mostrarPerfil'])->name('cliente.p
 
 Route::get('/cliente/ordenes', [OrdenController::class, 'historialCliente'])
     ->name('cliente.ordenes');
-
-
 
 Route::get('/logout', function () {
     session()->flush();

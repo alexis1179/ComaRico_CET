@@ -1,12 +1,12 @@
 <div class="flex justify-between items-center w-full h-16 bg-color-bg shadow-md px-4 py-10 sticky top-0 z-50">
     <a href="/menu" class="text-2xl font-bold text-color-main max-md:text-base">COMARICO GO!</a>
     
-    @if (session()->has('cliente_id'))
+    @if (!session()->has('usuarioNegocio_id'))
     <form class="flex justify-stretch flex-1 mx-8 max-w-3xl max-md:mx-2">
         <input type="text" id="producto_buscado" class="flex-1 h-10 px-4 border-2 border-gray-300 rounded-s-full outline-none max-md:w-10 focus:border-orange-500" placeholder="Buscar platillo...">
         <button class=" px-4 py-2 bg-color-main text-white rounded-e-lg hover:bg-orange-300">Buscar</button>
     </form>    
-    @else
+    @elseif (session()->has('usuarioNegocio_id'))
     <h1 class="text-3xl text-white">ADMINISTRACIÓN</h1>    
     @endif
     <div class="flex">
