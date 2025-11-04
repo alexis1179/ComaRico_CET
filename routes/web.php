@@ -14,7 +14,7 @@ use App\Http\Controllers\PagosController;
 */
 Route::get('/', function () {
     return redirect('/menu');
-});
+})->name('menu');
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 Route::post('/registrar', [AuthController::class, 'registrarCliente'])->name('registrar.cliente');
@@ -27,6 +27,7 @@ Route::get('/creadores', function () {
 
 
 Route::get('/menu', [PlatilloController::class, 'index']);
+Route::get('/menu/buscar', [PlatilloController::class, 'filtrarNombre'])->name('menu.buscar');
 Route::get('/menu/filtrar', [PlatilloController::class, 'filtrarPorCategoriaPrecio'])->name('menu.filtrar');
 Route::get('/carrito', [OrdenController::class, 'verCarrito'])->name('cliente.carrito');
 Route::get('/carrito/eliminar', [OrdenController::class, 'cancelarOrden'])->name('cliente.cancelarOrden');

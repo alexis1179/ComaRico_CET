@@ -37,4 +37,17 @@ class PlatilloController extends Controller
         $minPrecio = Platillo::where('disponible', true)->min('precio');
         return view('menu', compact('platillos', 'categorias', 'categoriaSelecc', 'maxPrecio', 'minPrecio'));
     }
+
+    public function filtrarNombre(Request $request)
+    {
+        $nombreBuscado = $request->input('nombre');
+        $platillos = Platillo::where('disponible', true)
+            ->where('nombre', 'like', '%' . $nombreBuscado . '%')
+            ->get();
+
+        $categorias = Platillo::where('disponible', true)->pluck('categoria')->unique();
+        $maxPrecio = Platillo::where('disponible', true)->max('precio');
+        $minPrecio = Platillo::where('disponible', true)->min('precio');
+        return view('menu', compact('platillos', 'categorias', 'maxPrecio', 'minPrecio'));
+    }
 }

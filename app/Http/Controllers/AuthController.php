@@ -97,7 +97,7 @@ class AuthController extends Controller
         }
 
         $cliente = Cliente::find(session('cliente_id'));
-        $ordenes = Orden::where('cliente_id', $cliente->id)->where('estado', 'finalizada')->get();
+        $ordenes = Orden::where('cliente_id', $cliente->id)->get();
         foreach ($ordenes as $orden) {
             $ordenId = $orden->id;
             $platillos = DB::table('orden_platillo')

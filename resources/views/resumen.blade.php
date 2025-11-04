@@ -9,6 +9,7 @@
 </head>
 <body>
     <x-top_bar/>
+    <x-side_barCliente/>
     <div class="bg-color-bg p-4 min-h-screen max-h-max text-white">
         <div class="flex items-start justify-center space-x-5 max-md:flex-col max-md:items-stretch max-md:space-y-5 max-md:space-x-0">
             <div class="flex-grow flex-shrink-0 rounded-lg shadow-lg p-6 max-w-5xl">
@@ -24,7 +25,7 @@
                 </ul>
 
                 <div class="text-end text-3xl font-bold max-md:text-2xl max-md:text-center">Total: <span class="text-orange-500">${{ number_format($orden->total,2) }}</span> </div>
-                <a href="{{route('cliente.cancelarOrden')}}" class="p-4 mx-auto text-white font-bold rounded-lg bg-color-main hover:bg-orange-400">Cancelar orden</a>
+                <a href="{{route('cliente.cancelarOrden')}}" class="p-4 mx-auto my-2 text-white font-bold rounded-lg bg-color-main hover:bg-orange-400 max-sm:p-2 max-sm:text-sm">Cancelar orden</a>
             </div>
 
             <form id="formOrden" method="POST" action="{{ route('orden.guardarNota', $orden->id) }}" class="flex-shrink flex flex-col items-center bg-color-secondary p-6 rounded-lg shadow-lg max-w-xl max-md:max-w-full w-full">

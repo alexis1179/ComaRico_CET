@@ -9,11 +9,12 @@
 </head>
 <body class="bg-color-bg">
     <x-top_bar/>
+    <x-side_barCliente/>
     <div class="shadow-lg bg-banner_img bg-center bg-no-repeat w-full h-screen relative">
         <div class="absolute bg-black opacity-50 w-full h-full z-0"></div>
-        <div class="flex flex-col items-center justify-center h-full text-white z-50 pb-20 relative">
-            <h1 class="text-5xl font-bold mb-4">Rápido, delicioso y sin esperas</h1>
-            <p class="text-lg">Explora nuestra deliciosa selección de platillos</p>
+        <div class="flex flex-col items-center justify-center h-full text-white z-10 pb-20 relative">
+            <h1 class="text-5xl font-bold mb-4 text-center">Rápido, delicioso y sin esperas</h1>
+            <p class="text-lg text-center">Explora nuestra deliciosa selección de platillos</p>
         </div>
     </div>
     <h1 class="text-4xl font-bold text-center text-white my-5">Menú</h1>

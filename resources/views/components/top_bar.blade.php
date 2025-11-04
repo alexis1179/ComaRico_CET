@@ -1,17 +1,31 @@
-<div class="flex justify-between items-center w-full h-16 bg-color-bg shadow-md px-4 py-10 sticky top-0 z-50">
-    <a href="/menu" class="text-2xl font-bold text-color-main max-md:text-base">COMARICO GO!</a>
+<div class="flex justify-between items-center w-full h-16 bg-color-bg shadow-md px-4 py-4 sticky top-0 z-50
+ flex-wrap max-sm:h-fit max-sm:justify-center max-sm:py-4">
+    <div class="flex items-center">
+        <button class="mx-2 left-0 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-lg focus:outline-none" id="sidebarOpen" aria-label="Close sidebar">
+            <svg width="40px" height="40px" class="max-sm:w-6 max-sm:h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>  
+        <a href="/menu" class="text-2xl font-bold text-color-main max-md:text-base max-sm:hidden">COMARICO GO!</a>
+    </div>
+
     
     @if (!session()->has('usuarioNegocio_id'))
-    <form class="flex justify-stretch flex-1 mx-8 max-w-3xl max-md:mx-2">
-        <input type="text" id="producto_buscado" class="flex-1 h-10 px-4 border-2 border-gray-300 rounded-s-full outline-none max-md:w-10 focus:border-orange-500" placeholder="Buscar platillo...">
-        <button class=" px-4 py-2 bg-color-main text-white rounded-e-lg hover:bg-orange-300">Buscar</button>
+    <form action="{{ route('menu.buscar')}}" class="flex justify-stretch flex-1 mx-8 max-w-3xl max-md:mx-2 max-sm:text-sm">
+        <input type="text" name="nombre" class="flex-1 h-10 px-4 border-2 border-gray-300 rounded-s-full outline-none max-md:w-10 focus:border-orange-500
+        max-sm:w-24" placeholder="Buscar platillo...">
+        <button type="submit" class=" px-4 py-2 bg-color-main text-white rounded-e-lg hover:bg-orange-300">
+            <svg  class="w-6 h-6 max-sm:w-6 max-sm:h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z" fill="#fff"/>
+            </svg>
+        </button>
     </form>    
     @elseif (session()->has('usuarioNegocio_id'))
     <h1 class="text-3xl text-white">ADMINISTRACIÓN</h1>    
     @endif
     <div class="flex">
         @if (session()->has('cliente_id'))
-        <a href="{{ route('cliente.ordenes') }}" class="flex flex-col items-center">
+        <a href="{{ route('cliente.perfil') }}" class="flex flex-col items-center">
 
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="max-md:w-auto max-md:h-fill hover:text-orange-500">
                 <path d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -36,3 +50,9 @@
         </a>
     </div>
 </div>
+<script>
+    document.getElementById('sidebarOpen').addEventListener('click', function() {
+         document.getElementById('sidebar').classList.remove('-left-full');
+         document.getElementById('sidebar').classList.toogle('left-0');
+    });
+</script>

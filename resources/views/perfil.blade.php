@@ -9,10 +9,12 @@
 </head>
 <body class="h-screen">
     <x-top_bar/>
-    <div class="bg-color-bg text-white p-4 h-full flex justify-center">
+    <x-side_barCliente/>
+    <div class="bg-color-bg text-white p-4 h-full flex justify-center max-md:flex-wrap max-md:flex-col-reverse">
         {{-- Historial de órdenes --}}
-        <div class="rounded-lg shadow-lg bg-color-secondary p-6 mr-5 max-w-4xl flex-1 h-fit flex flex-col items-center">
-            <h1 class="text-2xl font-bold text-center uppercase">Historial de Órdenes</h1>
+        <div class="rounded-lg shadow-lg bg-color-secondary p-6 mr-5 max-w-4xl flex-1 h-fit flex flex-col items-center
+         max-md:overflow-scroll max-md:w-full max-md:my-4">
+            <h1 class="text-2xl font-bold text-center uppercase max-md:text-lg">Historial de Órdenes</h1>
             <table class="w-full border-collapse my-4">
                 <thead>
                     <tr class="bg-slate-700">
